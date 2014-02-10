@@ -1,41 +1,40 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
 <?php
 include_once 'class/config.php';
 ?>
 <!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
         <title></title>
     </head>
-    <body> 
+    <body>
         <?php
-        $perso1 = new Personnage(33, 0);
-        $perso2 = new Personnage(54, 0);
-        
-        $perso1->setExperience(48);
-        
-        $perso2->setExperience(70);
-        
-        $perso1->frapper($perso2);
-        $perso1->gagnerExperience();
-        
-        $perso2->frapper($perso1);
-        $perso2->gagnerExperience();
-        
-        echo 'Le perso 1 a une force de '.$perso1->getForce().'<br>';
-        echo 'Le perso 2 a une force de '.$perso2->getForce().'<br>';
-        echo '<br>';
-        echo 'Le perso 1 a une expérience de '.$perso1->getExperience().'<br>';
-        echo 'Le perso 2 a une expérience de '.$perso2->getExperience().'<br>';
-        echo '<br>';
-        echo 'Le perso 1 a des dégats de '.$perso1->getDegats().'<br>';
-        echo 'Le perso 2 a des dégats de '.$perso2->getDegats().'<br>';
-        
-        // http://fr.openclassrooms.com/informatique/cours/programmez-en-oriente-objet-en-php/l-auto-chargement-de-classes
-        ?>
+            try {
+                $db = new PDO('mysql:host=localhost;dbname=db', 'root', '');
+            }
+            catch(Exception $e) {
+                echo 'Echec de la connexion à la base de données';
+                exit();
+            }
+            // On admet que $db est un objet PDO.
+            $request = $db->query('SELECT id, nom, forcePerso, degats, niveau, experience FROM personnages');
+
+            while ($donnees = $request->fetch(PDO::FETCH_ASSOC)) // Chaque entrée sera récupérée et placée dans un array.
+            {
+              // On passe les données (stockées dans un tableau) concernant le personnage au constructeur de la classe.
+              // On admet que le constructeur de la classe appelle chaque setter pour assigner les valeurs qu'on lui a données aux attributs correspondants.
+              $perso = new Personnage($donnees);
+
+              echo $perso->getNom(), ' a ', $perso->getForcePerso(), ' de force, ', $perso->getDegats(), ' de dégâts, ', $perso->getExperience(), ' d\'expérience et est au niveau ', $perso->getNiveau();
+            }
+              var_dump($perso);
+              
+              // http://fr.openclassrooms.com/informatique/cours/programmez-en-oriente-objet-en-php/l-hydratation
+         ?>
     </body>
 </html>
