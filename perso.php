@@ -28,13 +28,14 @@ and open the template in the editor.
             {
               // On passe les données (stockées dans un tableau) concernant le personnage au constructeur de la classe.
               // On admet que le constructeur de la classe appelle chaque setter pour assigner les valeurs qu'on lui a données aux attributs correspondants.
-              $perso = new Personnage($donnees);
-
-              echo $perso->getNom(), ' a ', $perso->getForcePerso(), ' de force, ', $perso->getDegats(), ' de dégâts, ', $perso->getExperience(), ' d\'expérience et est au niveau ', $perso->getNiveau();
-            }
+              $perso = new Personnage();
+              $perso->hydrate($donnees);
               var_dump($perso);
+
+              echo $perso->getNom(), ' a ', $perso->getForcePerso(), ' de force, ', $perso->getDegats(), ' de dégâts, ', $perso->getExperience(), ' d\'expérience et est au niveau ', $perso->getNiveau().'<br>';
+            }
               
-              // http://fr.openclassrooms.com/informatique/cours/programmez-en-oriente-objet-en-php/l-hydratation
+              // http://fr.openclassrooms.com/informatique/cours/programmez-en-oriente-objet-en-php/gerer-sa-bdd-correctement
          ?>
     </body>
 </html>

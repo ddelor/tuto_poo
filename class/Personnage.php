@@ -25,7 +25,30 @@ class Personnage {
 
     // CONSTRUCTEUR
     public function __construct() {
+        
     }
+    
+    
+    // HYDRATATION
+     public function hydrate(array $array) {
+//        $this->setId($array['id']);
+//        $this->setNom($array['nom']);
+//        $this->setForcePerso($array['forcePerso']);
+//        $this->setDegats($array['degats']);
+//        $this->setNiveau($array['niveau']);
+//        $this->setExperience($array['experience']);
+         foreach ($array as $key => $value) {
+            // On récupère le nom du setter correspondant à l'attribut.
+            $method = 'set'.ucfirst($key);
+
+            // Si le setter correspondant existe.
+            if (method_exists($this, $method)) {
+                // On appelle le setter.
+                $this->$method($value);
+            }
+         }
+         
+     }
 
 
     // GETTERS
@@ -50,7 +73,7 @@ class Personnage {
     
     // SETTERS
     public function setId($id) {
-        $id = int($id);
+        $id = (int)$id;
         if($id > 0) {
             $this->_id = $id;
         }
@@ -61,25 +84,25 @@ class Personnage {
         }
     }
     public function setForcePerso($forcePerso) {
-        $forcePerso = int($forcePerso);
+        $forcePerso = (int)$forcePerso;
         if($forcePerso >= 1 && $forcePerso <= 100) {
             $this->_forcePerso = $forcePerso;
         }
     }
     public function setDegats($degats) {
-        $degats = int($degats);
+        $degats = (int)$degats;
         if($degats >= 0 && $degats <= 100) {
             $this->_degats = $degats;
         }
     }
     public function setNiveau($niveau) {
-        $niveau = int($niveau);
+        $niveau = (int)$niveau;
         if($niveau >= 1 && $niveau <= 100) {
             $this->_niveau = $niveau;
         }
     }
     public function setExperience($experience) {
-        $experience = int($experience);
+        $experience = (int)$experience;
         if($experience >= 1 && $experience <= 100) {
             $this->_experience = $experience;
         }
